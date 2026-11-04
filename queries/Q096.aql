@@ -1,0 +1,11 @@
+-- Q096 / Endpoint RPC blockchain condivisi
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_HTTPHost",
+       "Hunt_URI", "Hunt_UserAgent"
+FROM events
+WHERE logsourceid = <LS_PROXY>
+  AND ("Hunt_HTTPHost" ILIKE '<RPC_DOMAIN_A>'
+       OR "Hunt_HTTPHost" ILIKE '<RPC_DOMAIN_B>')
+ORDER BY starttime ASC
+LIMIT 300 LAST 24 HOURS

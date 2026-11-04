@@ -1,0 +1,11 @@
+-- Q104 / Expressway: accessi al servizio di cluster
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       COUNT(*) AS Righe, SUM(sourcebytes) AS ByteIn
+FROM flows
+WHERE destinationip = '<EXPRESSWAY_IP>'
+  AND destinationport = <CLUSTER_PORT>
+GROUP BY sourceip, destinationip, destinationport
+ORDER BY Righe DESC
+LAST 24 HOURS

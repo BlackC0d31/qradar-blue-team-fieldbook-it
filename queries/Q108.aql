@@ -1,0 +1,13 @@
+-- Q108 / Stessa sessione IdP da IP diversi
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT "Hunt_SessionID", "Hunt_TargetUser",
+       UNIQUECOUNT(sourceip) AS Origini,
+       SUM(eventcount) AS Eventi
+FROM events
+WHERE logsourceid = <LS_IDP>
+  AND "Hunt_SessionID" IS NOT NULL
+GROUP BY "Hunt_SessionID", "Hunt_TargetUser"
+HAVING Origini > 1
+ORDER BY Origini DESC
+LIMIT 100 LAST 60 MINUTES

@@ -1,0 +1,12 @@
+-- Q097 / NetScaler: crash e modifiche sospette
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, QIDNAME(qid) AS Evento,
+       UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_NETSCALER>
+  AND (UTF8(payload) ILIKE '%crash%'
+       OR UTF8(payload) ILIKE '%core dump%'
+       OR UTF8(payload) ILIKE '%configuration%changed%')
+ORDER BY starttime ASC
+LIMIT 300 LAST 24 HOURS

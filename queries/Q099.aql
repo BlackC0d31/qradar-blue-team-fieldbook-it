@@ -1,0 +1,12 @@
+-- Q099 / WSO2 2026: problemi del throttling
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_IDP>
+  AND (UTF8(payload) ILIKE '%throttl%'
+       AND (UTF8(payload) ILIKE '%error%'
+            OR UTF8(payload) ILIKE '%exception%'))
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

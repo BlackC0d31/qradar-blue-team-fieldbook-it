@@ -1,0 +1,14 @@
+-- Q110 / WSO2 VS Code: processi di test inattesi
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, username,
+       "Hunt_Image", "Hunt_ParentImage",
+       "Hunt_CommandLine", "Hunt_ProcessGuid"
+FROM events
+WHERE logsourceid = <LS_EDR>
+  AND ("Hunt_ParentImage" ILIKE '%Code%'
+       AND ("Hunt_Image" ILIKE '%cmd.exe'
+            OR "Hunt_Image" ILIKE '%/sh'
+            OR "Hunt_Image" ILIKE '%powershell.exe'))
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

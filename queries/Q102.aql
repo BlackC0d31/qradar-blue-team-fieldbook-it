@@ -1,0 +1,12 @@
+-- Q102 / Wing FTP: NUL codificato e log sessione
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_WING>
+  AND (UTF8(payload) ILIKE '%/loginok.html%'
+       OR UTF8(payload) MATCHES '(?i).*username=[^ ]*%00.*'
+       OR UTF8(payload) ILIKE '%os.execute%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

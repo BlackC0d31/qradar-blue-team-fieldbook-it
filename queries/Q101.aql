@@ -1,0 +1,11 @@
+-- Q101 / OpenBMC/IPMI: origini verso UDP 623
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, COUNT(*) AS Righe,
+       SUM(sourcebytes) AS ByteIn
+FROM flows
+WHERE destinationip = '<BMC_IP>'
+  AND destinationport = 623 AND protocolid = 17
+GROUP BY sourceip, destinationip
+ORDER BY Righe DESC
+LAST 24 HOURS

@@ -1,0 +1,13 @@
+-- Q109 / Regola WAF: riscontro con esito e path
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT "Hunt_WAFRule", "Hunt_Action",
+       "Hunt_Status", "Hunt_URI", SUM(eventcount) AS N
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND sourceip = '<IP>'
+  AND "Hunt_WAFRule" IS NOT NULL
+GROUP BY "Hunt_WAFRule", "Hunt_Action",
+         "Hunt_Status", "Hunt_URI"
+ORDER BY N DESC
+LIMIT 100 LAST 60 MINUTES

@@ -1,0 +1,11 @@
+-- Q095 / Pivot DNS su domini forniti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_DNSName",
+       "Hunt_DNSRcode", UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_DNS>
+  AND ("Hunt_DNSName" ILIKE '<DOMAIN_A>'
+       OR "Hunt_DNSName" ILIKE '<DOMAIN_B>')
+ORDER BY starttime ASC
+LIMIT 300 LAST 24 HOURS

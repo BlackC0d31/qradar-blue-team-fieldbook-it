@@ -1,0 +1,11 @@
+-- Q105 / FortiOS: errori del servizio e modifiche
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_FW>
+  AND (UTF8(payload) ILIKE '%crash%'
+       OR UTF8(payload) ILIKE '%config%changed%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

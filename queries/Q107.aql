@@ -1,0 +1,11 @@
+-- Q107 / SNMP e NetBIOS da un host
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT destinationip, destinationport, protocolid,
+       COUNT(*) AS Righe
+FROM flows
+WHERE sourceip = '<HOST>'
+  AND destinationport IN (137,161)
+GROUP BY destinationip, destinationport, protocolid
+ORDER BY Righe DESC
+LAST 60 MINUTES

@@ -1,0 +1,12 @@
+-- Q106 / Webex e porta 9000: verifica del contesto
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       PROTOCOLNAME(protocolid) AS Protocollo,
+       SUM(sourcebytes) AS OutB,
+       SUM(destinationbytes) AS InB
+FROM flows
+WHERE sourceip = '<HOST>' AND destinationport = 9000
+GROUP BY sourceip, destinationip, destinationport,
+         protocolid
+LAST 60 MINUTES

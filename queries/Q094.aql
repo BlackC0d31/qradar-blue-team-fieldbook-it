@@ -1,0 +1,10 @@
+-- Q094 / Pivot su User-Agent HTTP fornito
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_HTTPHost",
+       "Hunt_URI", "Hunt_Method", "Hunt_Status"
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND "Hunt_UserAgent" ILIKE '%<USER_AGENT>%'
+ORDER BY starttime ASC
+LIMIT 300 LAST 24 HOURS

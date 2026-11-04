@@ -1,0 +1,11 @@
+-- Q103 / Pivot richieste e sessioni ZoneMinder
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_ZM>
+  AND (UTF8(payload) ILIKE '%/zm/%'
+       OR UTF8(payload) ILIKE '%ZMSESSID%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

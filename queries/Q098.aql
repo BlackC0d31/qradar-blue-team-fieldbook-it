@@ -1,0 +1,12 @@
+-- Q098 / WSO2 2026: esiti JWT e autenticazione
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_IDP>
+  AND (UTF8(payload) ILIKE '%JWT%'
+       AND (UTF8(payload) ILIKE '%algorithm%'
+            OR UTF8(payload) ILIKE '%signature%'))
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

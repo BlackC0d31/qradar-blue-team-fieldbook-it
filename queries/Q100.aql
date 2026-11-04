@@ -1,0 +1,15 @@
+-- Q100 / Email gateway: anomalie oltre le firme
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT qid, QIDNAME(qid) AS Evento,
+       SUM(eventcount) AS Totale,
+       MIN(starttime) AS Primo, MAX(starttime) AS Ultimo
+FROM events
+WHERE logsourceid = <LS_MAIL>
+  AND (UTF8(payload) ILIKE '%parser%error%'
+       OR UTF8(payload) ILIKE '%decompress%error%'
+       OR UTF8(payload) ILIKE '%segmentation fault%'
+       OR UTF8(payload) ILIKE '%unexpected%restart%')
+GROUP BY qid
+ORDER BY Totale DESC
+LAST 24 HOURS

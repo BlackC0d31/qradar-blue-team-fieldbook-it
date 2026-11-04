@@ -1,0 +1,11 @@
+-- Q091 / Exchange ibrido: principal e certificati
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_CLOUD>
+  AND (UTF8(payload) ILIKE '%00000002-0000-0ff1-ce00-000000000000%'
+       OR UTF8(payload) ILIKE '%keyCredentials%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES
