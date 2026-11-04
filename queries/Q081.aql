@@ -1,0 +1,10 @@
+-- Q081 / Pivot su un IP indicatore parametrico
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, logsourceid, sourceip, destinationip,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE sourceip = '<IOC_IP>'
+   OR destinationip = '<IOC_IP>'
+ORDER BY starttime ASC
+LIMIT 500 LAST 24 HOURS

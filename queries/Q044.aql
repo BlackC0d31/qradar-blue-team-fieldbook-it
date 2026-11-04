@@ -1,0 +1,13 @@
+-- Q044 / Connessioni a resolver non approvati
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       COUNT(*) AS Righe
+FROM flows
+WHERE sourceip = '<HOST>'
+  AND destinationport IN (53,853)
+  AND NOT REFERENCESETCONTAINS('Hunt_DNSResolvers',
+                              destinationip)
+GROUP BY sourceip, destinationip, destinationport
+ORDER BY Righe DESC
+LAST 60 MINUTES

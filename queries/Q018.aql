@@ -1,0 +1,12 @@
+-- Q018 / Brute force su un account
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT "Hunt_TargetUser", sourceip,
+       SUM(eventcount) AS Errori
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND "Hunt_EventID" = '4625'
+GROUP BY "Hunt_TargetUser", sourceip
+HAVING Errori >= 15
+ORDER BY Errori DESC
+LAST 15 MINUTES

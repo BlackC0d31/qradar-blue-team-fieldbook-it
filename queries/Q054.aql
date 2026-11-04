@@ -1,0 +1,11 @@
+-- Q054 / Accesso a LSASS da processi insoliti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, username,
+       "Hunt_Image", "Hunt_ParentImage",
+       "Hunt_CommandLine", "Hunt_ProcessGuid"
+FROM events
+WHERE logsourceid = <LS_EDR>
+  AND ("Hunt_TargetImage" ILIKE '%lsass.exe')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

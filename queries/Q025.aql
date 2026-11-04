@@ -1,0 +1,13 @@
+-- Q025 / Ticket Kerberos: volume anomalo
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, "Hunt_TargetUser",
+       UNIQUECOUNT("Hunt_ServiceName") AS Servizi,
+       SUM(eventcount) AS Richieste
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND "Hunt_EventID" = '4769'
+GROUP BY sourceip, "Hunt_TargetUser"
+HAVING Servizi >= 10
+ORDER BY Richieste DESC
+LAST 15 MINUTES

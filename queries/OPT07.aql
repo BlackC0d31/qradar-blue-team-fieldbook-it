@@ -1,0 +1,9 @@
+-- OPT07 / Testo con filtro selettivo
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, qid, UTF8(payload) AS Raw
+FROM events
+WHERE TEXT SEARCH '<TERM>'
+  AND logsourceid = <LS_ID>
+LIMIT 200
+START '<START>' STOP '<STOP>'

@@ -1,0 +1,15 @@
+-- Q072 / Successi per utenti con fallimenti recenti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_TargetUser",
+       UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND "Hunt_EventID" = '4624'
+  AND "Hunt_TargetUser" IN (
+    SELECT "Hunt_TargetUser" FROM events
+    WHERE logsourceid = <LS_WIN>
+      AND "Hunt_EventID" = '4625'
+    GROUP BY "Hunt_TargetUser"
+    LIMIT 10000 LAST 15 MINUTES)
+LIMIT 200 LAST 60 MINUTES

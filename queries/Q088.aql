@@ -1,0 +1,11 @@
+-- Q088 / ESA: management e quarantine esposti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationport,
+       COUNT(*) AS Righe, SUM(sourcebytes) AS ByteIn
+FROM flows
+WHERE destinationip = '<ESA_IP>'
+  AND destinationport IN (80,443,6025,6080,6443,8443)
+GROUP BY sourceip, destinationport
+ORDER BY Righe DESC
+LAST 24 HOURS

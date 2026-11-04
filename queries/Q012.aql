@@ -1,0 +1,10 @@
+-- Q012 / URL, Host e User-Agent
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_HTTPHost",
+       "Hunt_URI", "Hunt_UserAgent", "Hunt_Status"
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND sourceip = '<IP>'
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

@@ -1,0 +1,12 @@
+-- Q085 / Pattern di comandi negli header SMTP
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_MAIL>
+  AND (UTF8(payload) ILIKE '%Message-ID:%'
+       AND (UTF8(payload) ILIKE '%TO PROGRAM%'
+            OR UTF8(payload) ILIKE '%<EXEC_MARKER>%'))
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

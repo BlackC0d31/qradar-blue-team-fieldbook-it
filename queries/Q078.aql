@@ -1,0 +1,11 @@
+-- Q078 / Identificare QID con parsing insufficiente
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT qid, QIDNAME(qid) AS Evento,
+       SUM(eventcount) AS Totale
+FROM events
+WHERE logsourceid = <LS_ID>
+  AND (username IS NULL OR sourceip = '0.0.0.0')
+GROUP BY qid
+ORDER BY Totale DESC
+LIMIT 30 LAST 60 MINUTES

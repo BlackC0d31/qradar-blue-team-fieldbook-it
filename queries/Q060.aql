@@ -1,0 +1,12 @@
+-- Q060 / Richieste verso file server-side sospetti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, "Hunt_URI", "Hunt_Status",
+       SUM(eventcount) AS Richieste
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND ("Hunt_URI" ILIKE '%.jsp%'
+       OR "Hunt_URI" ILIKE '%.aspx%')
+GROUP BY sourceip, "Hunt_URI", "Hunt_Status"
+ORDER BY Richieste DESC
+LIMIT 100 LAST 60 MINUTES

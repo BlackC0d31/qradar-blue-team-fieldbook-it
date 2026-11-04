@@ -1,0 +1,10 @@
+-- Q014 / Ultimo evento di una sorgente
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT logsourceid, LOGSOURCENAME(logsourceid) AS Fonte,
+       MAX(starttime) AS Ultimo,
+       SUM(eventcount) AS Eventi
+FROM events
+WHERE logsourceid = <LS_ID>
+GROUP BY logsourceid
+LAST 24 HOURS

@@ -1,0 +1,9 @@
+-- Q010 / Ricerca testuale indicizzata
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, QIDNAME(qid) AS Evento,
+       UTF8(payload) AS Raw
+FROM events
+WHERE TEXT SEARCH '<TERM>'
+  AND logsourceid = <LS_ID>
+LIMIT 100 LAST 15 MINUTES

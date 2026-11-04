@@ -1,0 +1,11 @@
+-- Q073 / Sorgenti rare nella finestra
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip,
+       SUM(eventcount) AS Totale
+FROM events
+WHERE logsourceid = <LS_WEB>
+GROUP BY sourceip, destinationip
+HAVING Totale <= 3
+ORDER BY Totale ASC
+LIMIT 100 LAST 24 HOURS

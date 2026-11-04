@@ -1,0 +1,12 @@
+-- Q017 / Password spray per sorgente
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, UNIQUECOUNT("Hunt_TargetUser") AS Utenti,
+       SUM(eventcount) AS Errori
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND "Hunt_EventID" = '4625'
+GROUP BY sourceip
+HAVING Utenti >= 10 AND Errori >= 20
+ORDER BY Errori DESC
+LAST 15 MINUTES

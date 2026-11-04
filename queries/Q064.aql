@@ -1,0 +1,13 @@
+-- Q064 / Rimozione log e disattivazione controlli
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_EDR>
+  AND (UTF8(payload) ILIKE '%wevtutil%cl %'
+       OR UTF8(payload) ILIKE '%Clear-EventLog%'
+       OR UTF8(payload) ILIKE '%Set-MpPreference%'
+       OR UTF8(payload) ILIKE '%auditctl -e 0%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

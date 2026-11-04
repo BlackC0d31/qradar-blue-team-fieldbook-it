@@ -1,0 +1,11 @@
+-- Q063 / Attività Kubernetes amministrativa
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, username, "Hunt_K8sVerb",
+       "Hunt_K8sResource", "Hunt_K8sSubresource",
+       "Hunt_K8sObject", UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_K8S>
+  AND ("Hunt_K8sSubresource" IN ('exec','attach')
+       OR "Hunt_K8sResource" = 'secrets')
+LIMIT 200 LAST 60 MINUTES

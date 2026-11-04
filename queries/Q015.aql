@@ -1,0 +1,10 @@
+-- Q015 / Finestra assoluta riproducibile
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE sourceip = '<IP>'
+ORDER BY starttime ASC
+LIMIT 500
+START '<START>' STOP '<STOP>'

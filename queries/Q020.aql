@@ -1,0 +1,12 @@
+-- Q020 / Accessi RDP e credenziali esplicite
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw, "Hunt_TargetUser",
+       "Hunt_LogonType"
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND (("Hunt_EventID" = '4624' AND "Hunt_LogonType" = '10')
+       OR "Hunt_EventID" = '4648')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

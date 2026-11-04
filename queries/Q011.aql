@@ -1,0 +1,10 @@
+-- Q011 / Dominio esatto nei DNS
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_DNSName",
+       "Hunt_DNSRcode", UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_DNS>
+  AND "Hunt_DNSName" ILIKE '<DOMAIN>'
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

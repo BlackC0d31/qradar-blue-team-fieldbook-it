@@ -1,0 +1,7 @@
+-- OPT05 / Sorgente IP, ramo A
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, logsourceid, sourceip, destinationip, qid
+FROM events
+WHERE sourceip = '<IP>'
+START '<START>' STOP '<STOP>'

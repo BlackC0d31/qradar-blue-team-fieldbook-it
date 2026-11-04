@@ -1,0 +1,10 @@
+-- Q067 / Ritardo tra device e storage
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT logsourceid,
+       AVG((storageTime-devicetime)/1000.0) AS MediaSec,
+       MAX((storageTime-devicetime)/1000.0) AS MaxSec
+FROM events
+WHERE logsourceid = <LS_ID> AND devicetime > 0
+GROUP BY logsourceid
+LAST 60 MINUTES

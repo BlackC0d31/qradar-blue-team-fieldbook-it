@@ -1,0 +1,10 @@
+-- Q031 / Autenticazioni IdP da IP e utenti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, "Hunt_TargetUser", "Hunt_Result",
+       SUM(eventcount) AS Totale
+FROM events
+WHERE logsourceid = <LS_IDP>
+GROUP BY sourceip, "Hunt_TargetUser", "Hunt_Result"
+ORDER BY Totale DESC
+LIMIT 100 LAST 60 MINUTES

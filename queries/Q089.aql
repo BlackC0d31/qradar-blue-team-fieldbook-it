@@ -1,0 +1,12 @@
+-- Q089 / Exchange: superfici web e PowerShell
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_URI",
+       "Hunt_Method", "Hunt_Status", username
+FROM events
+WHERE logsourceid = <LS_EXCH>
+  AND ("Hunt_URI" ILIKE '%/autodiscover/%'
+       OR "Hunt_URI" ILIKE '%/powershell%'
+       OR "Hunt_URI" ILIKE '%/ecp/%')
+ORDER BY starttime ASC
+LIMIT 300 LAST 60 MINUTES

@@ -1,0 +1,12 @@
+-- Q041 / DNS con molti nomi distinti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip,
+       UNIQUECOUNT("Hunt_DNSName") AS Nomi,
+       SUM(eventcount) AS Richieste
+FROM events
+WHERE logsourceid = <LS_DNS>
+GROUP BY sourceip
+HAVING Nomi >= 100
+ORDER BY Nomi DESC
+LAST 15 MINUTES

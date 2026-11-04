@@ -1,0 +1,10 @@
+-- Q027 / Modifiche alle directory
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND ("Hunt_EventID" = '5136')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

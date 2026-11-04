@@ -1,0 +1,10 @@
+-- Q007 / Eventi dominanti per QID
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT qid, QIDNAME(qid) AS Evento,
+       SUM(eventcount) AS Totale
+FROM events
+WHERE sourceip = '<IP>'
+GROUP BY qid
+ORDER BY Totale DESC
+LIMIT 30 LAST 60 MINUTES

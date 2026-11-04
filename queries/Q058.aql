@@ -1,0 +1,14 @@
+-- Q058 / Tunnel e inoltri remoti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_LINUX>
+  AND (UTF8(payload) ILIKE '%ssh -R%'
+       OR UTF8(payload) ILIKE '%ssh -L%'
+       OR UTF8(payload) ILIKE '%socat%'
+       OR UTF8(payload) ILIKE '%chisel%'
+       OR UTF8(payload) ILIKE '%cloudflared%tunnel%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

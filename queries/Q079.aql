@@ -1,0 +1,9 @@
+-- Q079 / Copertura di una proprietà custom
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT COUNT(*) AS Totale,
+       SUM(CASE WHEN "Hunt_URI" IS NOT NULL
+                THEN 1 ELSE 0 END) AS ConURI
+FROM events
+WHERE logsourceid = <LS_WEB>
+LAST 60 MINUTES

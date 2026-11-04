@@ -1,0 +1,12 @@
+-- Q042 / DNS NXDOMAIN per client
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, SUM(eventcount) AS Errori,
+       UNIQUECOUNT("Hunt_DNSName") AS Nomi
+FROM events
+WHERE logsourceid = <LS_DNS>
+  AND "Hunt_DNSRcode" = 'NXDOMAIN'
+GROUP BY sourceip
+HAVING Errori >= 50
+ORDER BY Errori DESC
+LAST 15 MINUTES

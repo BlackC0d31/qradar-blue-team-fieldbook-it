@@ -1,0 +1,11 @@
+-- Q059 / Nuovo JSP scritto nel webroot
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_Image",
+       "Hunt_TargetFilename", "Hunt_ProcessGuid"
+FROM events
+WHERE logsourceid = <LS_EDR>
+  AND "Hunt_TargetFilename" ILIKE '%webapps%'
+  AND "Hunt_TargetFilename" ILIKE '%.jsp'
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

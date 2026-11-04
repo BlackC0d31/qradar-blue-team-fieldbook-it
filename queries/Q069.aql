@@ -1,0 +1,10 @@
+-- Q069 / Enrichment dell’asset da mappa
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip,
+       REFERENCEMAP('Hunt_AssetOwner',sourceip) AS Owner,
+       SUM(eventcount) AS Totale
+FROM events
+WHERE sourceip = '<HOST>'
+GROUP BY sourceip
+LAST 60 MINUTES

@@ -1,0 +1,10 @@
+-- OPT04 / Riscrittura diretta di Q076
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, UNIQUECOUNT(destinationip) AS N
+FROM events
+WHERE logsourceid = <LS_FW>
+GROUP BY sourceip
+HAVING N >= 30
+ORDER BY N DESC
+LAST 15 MINUTES

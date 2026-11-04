@@ -1,0 +1,9 @@
+-- Q002 / Account esatto o indirizzo email
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE username ILIKE '<USER>'
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

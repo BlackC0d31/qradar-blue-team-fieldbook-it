@@ -1,0 +1,10 @@
+-- Q087 / Contatti gateway mail verso un IOC fornito
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT firstpackettime, sourceip, destinationip,
+       destinationport, sourcebytes, destinationbytes
+FROM flows
+WHERE sourceip = '<ESA_IP>'
+  AND destinationip = '<IOC_IP>'
+ORDER BY firstpackettime ASC
+LIMIT 500 LAST 24 HOURS

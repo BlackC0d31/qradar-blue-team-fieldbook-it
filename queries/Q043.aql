@@ -1,0 +1,10 @@
+-- Q043 / DNS con etichette molto lunghe
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_DNSName",
+       "Hunt_DNSType", UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_DNS>
+  AND "Hunt_DNSName" MATCHES
+      '(?i)[a-z0-9_-]{40,}[.].*'
+LIMIT 200 LAST 60 MINUTES

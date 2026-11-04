@@ -1,0 +1,12 @@
+-- Q074 / Nuove destinazioni rispetto alla baseline
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT destinationip, destinationport,
+       COUNT(*) AS Righe
+FROM flows
+WHERE sourceip = '<HOST>'
+  AND NOT REFERENCESETCONTAINS('Hunt_BaselineDestIP',
+                              destinationip)
+GROUP BY destinationip, destinationport
+ORDER BY Righe DESC
+LAST 60 MINUTES

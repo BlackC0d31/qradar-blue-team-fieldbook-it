@@ -1,0 +1,12 @@
+-- Q084 / IdP: chiamate SCIM e provisioning
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_Method",
+       "Hunt_URI", "Hunt_Status", username
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND "Hunt_HTTPHost" ILIKE '<VHOST>'
+  AND ("Hunt_URI" ILIKE '%/scim2/%'
+       OR "Hunt_URI" ILIKE '%/services/%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 24 HOURS

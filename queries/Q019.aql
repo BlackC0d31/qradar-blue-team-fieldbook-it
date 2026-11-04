@@ -1,0 +1,12 @@
+-- Q019 / Successi ed errori dello stesso utente
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw, "Hunt_TargetUser",
+       "Hunt_LogonType"
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND ("Hunt_EventID" IN ('4624','4625')
+       AND "Hunt_TargetUser" ILIKE '<USER>')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

@@ -1,0 +1,8 @@
+-- Q005 / Offense con finestra ottimizzata
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE INOFFENSE(<OFFENSE_ID>)
+TIMES OFFENSE_TIME(<OFFENSE_ID>)

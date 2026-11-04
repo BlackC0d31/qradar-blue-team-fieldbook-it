@@ -1,0 +1,12 @@
+-- Q038 / Trasferimenti prevalentemente in uscita
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       SUM(sourcebytes) AS OutB,
+       SUM(destinationbytes) AS InB
+FROM flows
+WHERE sourceip = '<HOST>'
+GROUP BY sourceip, destinationip, destinationport
+HAVING OutB > 100000000 AND OutB > 10 * InB
+ORDER BY OutB DESC
+LAST 60 MINUTES

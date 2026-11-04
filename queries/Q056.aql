@@ -1,0 +1,13 @@
+-- Q056 / Persistenza Unix nei log audit
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_LINUX>
+  AND (UTF8(payload) ILIKE '%authorized_keys%'
+       OR UTF8(payload) ILIKE '%/etc/cron%'
+       OR UTF8(payload) ILIKE '%systemctl enable%'
+       OR UTF8(payload) ILIKE '%useradd%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

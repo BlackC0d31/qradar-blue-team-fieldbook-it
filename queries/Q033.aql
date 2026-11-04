@@ -1,0 +1,12 @@
+-- Q033 / Scansione verticale di porte
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip,
+       UNIQUECOUNT(destinationport) AS Porte,
+       COUNT(*) AS Righe
+FROM flows
+WHERE sourceip = '<IP>'
+GROUP BY sourceip, destinationip
+HAVING Porte >= 20
+ORDER BY Porte DESC
+LAST 15 MINUTES

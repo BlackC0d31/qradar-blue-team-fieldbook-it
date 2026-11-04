@@ -1,0 +1,13 @@
+-- Q035 / Movimento laterale da un server
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT destinationip, destinationport,
+       COUNT(*) AS Righe, SUM(sourcebytes) AS ByteOut
+FROM flows
+WHERE sourceip = '<HOST>'
+  AND INCIDR('<INTERNAL_CIDR>',destinationip)
+  AND destinationport IN (22,135,139,389,445,636,
+                         3389,5985,5986)
+GROUP BY destinationip, destinationport
+ORDER BY Righe DESC
+LAST 60 MINUTES

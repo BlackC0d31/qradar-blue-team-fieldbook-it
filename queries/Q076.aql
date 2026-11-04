@@ -1,0 +1,12 @@
+-- Q076 / Sottoquery FROM su candidati aggregati
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, N
+FROM (
+  SELECT sourceip, UNIQUECOUNT(destinationip) AS N
+  FROM events
+  WHERE logsourceid = <LS_FW>
+  GROUP BY sourceip
+  LAST 15 MINUTES)
+WHERE N >= 30
+ORDER BY N DESC

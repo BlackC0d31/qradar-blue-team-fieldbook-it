@@ -1,0 +1,10 @@
+-- Q080 / Distribuzione dei dati tra domini
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT domainid, logsourceid,
+       SUM(eventcount) AS Totale
+FROM events
+WHERE sourceip = '<IP>'
+GROUP BY domainid, logsourceid
+ORDER BY Totale DESC
+LAST 60 MINUTES

@@ -1,0 +1,12 @@
+-- Q071 / Host non autorizzati per account di servizio
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, username, sourceip,
+       QIDNAME(qid) AS Evento
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND "Hunt_EventID" = '4624'
+  AND REFERENCESETCONTAINS('Hunt_ServiceUsers',username)
+  AND NOT REFERENCEMAPSETCONTAINS(
+      'Hunt_UserAllowedIPs',username,sourceip)
+LIMIT 200 LAST 60 MINUTES

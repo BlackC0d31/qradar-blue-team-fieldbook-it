@@ -1,0 +1,13 @@
+-- Q037 / Egress escluso dalle reti note
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       SUM(sourcebytes) AS ByteOut,
+       SUM(destinationbytes) AS ByteIn
+FROM flows
+WHERE sourceip = '<HOST>'
+  AND NOT REFERENCESETCONTAINS('Hunt_InternalIPs',
+                              destinationip)
+GROUP BY sourceip, destinationip, destinationport
+ORDER BY ByteOut DESC
+LIMIT 100 LAST 60 MINUTES

@@ -1,0 +1,12 @@
+-- Q032 / Modifiche OAuth, consenso e credenziali
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_CLOUD>
+  AND (UTF8(payload) ILIKE '%credential%'
+       OR UTF8(payload) ILIKE '%consent%'
+       OR UTF8(payload) ILIKE '%service principal%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

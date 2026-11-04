@@ -1,0 +1,13 @@
+-- Q075 / Rapporto allow/deny con CASE
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip,
+       SUM(CASE WHEN "Hunt_Action" = 'deny'
+                THEN eventcount ELSE 0 END) AS Deny,
+       SUM(CASE WHEN "Hunt_Action" = 'allow'
+                THEN eventcount ELSE 0 END) AS AllowN
+FROM events
+WHERE logsourceid = <LS_FW>
+GROUP BY sourceip
+ORDER BY Deny DESC
+LIMIT 50 LAST 60 MINUTES

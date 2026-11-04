@@ -1,0 +1,11 @@
+-- OPT03 / Raw sui candidati
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, qid,
+       UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_ID> AND sourceip = '<IP>'
+  AND qid = <QID>
+ORDER BY starttime ASC
+LIMIT 200
+START '<START>' STOP '<STOP>'

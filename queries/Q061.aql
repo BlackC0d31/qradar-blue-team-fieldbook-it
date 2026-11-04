@@ -1,0 +1,11 @@
+-- Q061 / Errori HTTP per endpoint
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT "Hunt_URI", "Hunt_Status",
+       SUM(eventcount) AS Totale
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND "Hunt_Status" IN ('400','401','403','500','502','503')
+GROUP BY "Hunt_URI", "Hunt_Status"
+ORDER BY Totale DESC
+LIMIT 50 LAST 15 MINUTES

@@ -1,0 +1,9 @@
+-- Q004 / Eventi collegati a una offense
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE INOFFENSE(<OFFENSE_ID>)
+ORDER BY starttime ASC
+LIMIT 500 LAST 24 HOURS

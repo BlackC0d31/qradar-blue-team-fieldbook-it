@@ -1,0 +1,13 @@
+-- Q070 / Tabella utenti: ruolo e reparto
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT username,
+       REFERENCETABLE('Hunt_UserMeta','Role',username)
+         AS Ruolo,
+       REFERENCETABLE('Hunt_UserMeta','Department',username)
+         AS Reparto,
+       SUM(eventcount) AS Totale
+FROM events
+WHERE username IS NOT NULL
+GROUP BY username
+LIMIT 100 LAST 60 MINUTES

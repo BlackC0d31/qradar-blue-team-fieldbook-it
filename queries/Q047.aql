@@ -1,0 +1,11 @@
+-- Q047 / Traffico VPN/DTLS da verificare
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, protocolid,
+       COUNT(*) AS Righe, SUM(sourcebytes) AS ByteIn
+FROM flows
+WHERE destinationip = '<GATEWAY>'
+  AND destinationport = 443 AND protocolid IN (6,17)
+GROUP BY sourceip, destinationip, protocolid
+ORDER BY Righe DESC
+LAST 60 MINUTES

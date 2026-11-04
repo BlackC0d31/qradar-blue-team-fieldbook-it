@@ -1,0 +1,11 @@
+-- Q013 / Dettaglio flussi con un IP
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, sourceport,
+       destinationip, destinationport,
+       PROTOCOLNAME(protocolid) AS Protocollo,
+       sourcebytes, destinationbytes
+FROM flows
+WHERE sourceip = '<IP>' OR destinationip = '<IP>'
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

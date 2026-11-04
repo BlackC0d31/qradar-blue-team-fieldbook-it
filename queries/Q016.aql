@@ -1,0 +1,8 @@
+-- Q016 / Anteprima del raw della sorgente
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, logsourceid, qid, username,
+       UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_ID>
+LIMIT 10 LAST 5 MINUTES

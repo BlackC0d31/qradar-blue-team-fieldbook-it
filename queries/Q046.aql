@@ -1,0 +1,13 @@
+-- Q046 / IP prima e dopo NAT
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip,
+       "Hunt_PreNATSrc", "Hunt_PostNATSrc",
+       "Hunt_SessionID", UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_FW>
+  AND (sourceip = '<IP>'
+       OR "Hunt_PreNATSrc" = '<IP>'
+       OR "Hunt_PostNATSrc" = '<IP>')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

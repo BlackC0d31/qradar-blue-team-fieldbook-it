@@ -1,0 +1,12 @@
+-- Q039 / Volume piccolo e ripetuto: candidati C2
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       COUNT(*) AS Righe, AVG(sourcebytes) AS MediaOut,
+       STDEV(sourcebytes) AS Variabilita
+FROM flows
+WHERE sourceip = '<HOST>'
+GROUP BY sourceip, destinationip, destinationport
+HAVING Righe >= 20 AND MediaOut < 10000
+ORDER BY Righe DESC
+LAST 60 MINUTES

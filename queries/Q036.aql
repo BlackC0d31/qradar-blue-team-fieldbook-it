@@ -1,0 +1,11 @@
+-- Q036 / LDAPS negato: il caso porta 636
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip,
+       "Hunt_Action", QIDNAME(qid) AS Evento,
+       UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_FW>
+  AND sourceip = '<HOST>' AND destinationport = 636
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

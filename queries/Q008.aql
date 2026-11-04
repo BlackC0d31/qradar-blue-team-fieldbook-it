@@ -1,0 +1,13 @@
+-- Q008 / Deny verso una singola destinazione
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationip, destinationport,
+       "Hunt_Action", SUM(eventcount) AS Totale
+FROM events
+WHERE logsourceid = <LS_FW>
+  AND sourceip = '<IP>'
+  AND "Hunt_Action" IN ('deny','drop','blocked')
+GROUP BY sourceip, destinationip, destinationport,
+         "Hunt_Action"
+ORDER BY Totale DESC
+LAST 60 MINUTES

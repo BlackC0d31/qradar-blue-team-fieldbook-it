@@ -1,0 +1,11 @@
+-- Q082 / WSO2: accessi a /fileupload
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_HTTPHost",
+       "Hunt_Method", "Hunt_URI", "Hunt_Status"
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND "Hunt_HTTPHost" ILIKE '<VHOST>'
+  AND "Hunt_URI" ILIKE '%/fileupload%'
+ORDER BY starttime ASC
+LIMIT 200 LAST 24 HOURS

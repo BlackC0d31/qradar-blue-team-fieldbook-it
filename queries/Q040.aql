@@ -1,0 +1,10 @@
+-- Q040 / Timeline per verificare un beacon
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT firstpackettime, lastpackettime,
+       sourceip, destinationip, destinationport,
+       sourcebytes, destinationbytes
+FROM flows
+WHERE sourceip = '<HOST>' AND destinationip = '<DST>'
+ORDER BY firstpackettime ASC
+LIMIT 1000 LAST 60 MINUTES

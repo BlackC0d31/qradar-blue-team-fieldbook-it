@@ -1,0 +1,7 @@
+-- OPT06 / Destinazione IP, ramo B
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, logsourceid, sourceip, destinationip, qid
+FROM events
+WHERE destinationip = '<IP>'
+START '<START>' STOP '<STOP>'

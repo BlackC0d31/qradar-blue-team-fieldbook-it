@@ -1,0 +1,13 @@
+-- Q057 / Download seguito da shell
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_LINUX>
+  AND ((UTF8(payload) ILIKE '%curl%'
+        OR UTF8(payload) ILIKE '%wget%')
+       AND (UTF8(payload) ILIKE '%| sh%'
+            OR UTF8(payload) ILIKE '%| bash%'))
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

@@ -1,0 +1,11 @@
+-- Q030 / Account di servizio usato da molte origini
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT username, UNIQUECOUNT(sourceip) AS Origini,
+       SUM(eventcount) AS Eventi
+FROM events
+WHERE REFERENCESETCONTAINS('Hunt_ServiceUsers',username)
+GROUP BY username
+HAVING Origini >= 3
+ORDER BY Origini DESC
+LAST 60 MINUTES

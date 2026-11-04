@@ -1,0 +1,11 @@
+-- Q034 / Scansione orizzontale di host
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT sourceip, destinationport,
+       UNIQUECOUNT(destinationip) AS Host
+FROM flows
+WHERE sourceip = '<IP>'
+GROUP BY sourceip, destinationport
+HAVING Host >= 30
+ORDER BY Host DESC
+LAST 15 MINUTES

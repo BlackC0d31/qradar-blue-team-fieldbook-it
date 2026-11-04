@@ -1,0 +1,10 @@
+-- Q006 / Quali sorgenti vedono questo IP?
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT logsourceid, LOGSOURCENAME(logsourceid) AS Fonte,
+       COUNT(*) AS Righe, SUM(eventcount) AS Eventi
+FROM events
+WHERE sourceip = '<IP>' OR destinationip = '<IP>'
+GROUP BY logsourceid
+ORDER BY Eventi DESC
+LAST 60 MINUTES

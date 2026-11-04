@@ -1,0 +1,11 @@
+-- Q009 / Esiti misti sullo stesso percorso
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT "Hunt_Action", destinationport,
+       COUNT(*) AS Righe, SUM(eventcount) AS Totale
+FROM events
+WHERE logsourceid = <LS_FW>
+  AND sourceip = '<IP>' AND destinationip = '<DST>'
+GROUP BY "Hunt_Action", destinationport
+ORDER BY Totale DESC
+LAST 60 MINUTES

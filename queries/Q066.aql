@@ -1,0 +1,10 @@
+-- Q066 / Volume per bucket di cinque minuti
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT LONG(starttime / 300000) * 300000 AS BucketMs,
+       SUM(eventcount) AS Eventi
+FROM events
+WHERE logsourceid = <LS_ID>
+GROUP BY BucketMs
+ORDER BY BucketMs ASC
+LAST 60 MINUTES

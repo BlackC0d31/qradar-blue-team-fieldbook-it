@@ -1,0 +1,12 @@
+-- Q086 / Marker generici di comando e staging mail
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_MAIL>
+  AND (UTF8(payload) ILIKE '%<EXEC_MARKER>%'
+       OR UTF8(payload) ILIKE '%<STAGE_PATH>%'
+       OR UTF8(payload) ILIKE '%COPY%TO PROGRAM%')
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

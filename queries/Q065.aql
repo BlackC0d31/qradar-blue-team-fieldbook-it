@@ -1,0 +1,10 @@
+-- Q065 / Numero di righe contro numero di eventi
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT logsourceid, COUNT(*) AS Righe,
+       SUM(eventcount) AS Eventi,
+       MAX(eventcount) AS MaxCoalescenza
+FROM events
+WHERE logsourceid = <LS_ID>
+GROUP BY logsourceid
+LAST 60 MINUTES

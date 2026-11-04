@@ -1,0 +1,10 @@
+-- OPT02 / Classifica prima, raw dopo
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT qid, SUM(eventcount) AS N,
+       MIN(starttime) AS Primo, MAX(starttime) AS Ultimo
+FROM events
+WHERE logsourceid = <LS_ID> AND sourceip = '<IP>'
+GROUP BY qid
+ORDER BY N DESC
+START '<START>' STOP '<STOP>'

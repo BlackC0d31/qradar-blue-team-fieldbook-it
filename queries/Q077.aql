@@ -1,0 +1,6 @@
+-- Q077 / Accesso a dati accumulati GLOBALVIEW
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT *
+FROM GLOBALVIEW('<SAVED_SEARCH>','NORMAL')
+LIMIT 20 LAST 24 HOURS

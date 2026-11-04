@@ -1,0 +1,9 @@
+-- Q068 / IP in reference set di hunting
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip,
+       QIDNAME(qid) AS Evento
+FROM events
+WHERE REFERENCESETCONTAINS('Hunt_IOC_IP',sourceip)
+   OR REFERENCESETCONTAINS('Hunt_IOC_IP',destinationip)
+LIMIT 200 LAST 60 MINUTES

@@ -1,0 +1,10 @@
+-- Q055 / Nuovi servizi e scheduled task
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_WIN>
+  AND ("Hunt_EventID" IN ('4697','4698','4702'))
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES

@@ -1,0 +1,10 @@
+-- Q062 / Traversal in URI, anche codificato
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, "Hunt_URI",
+       "Hunt_Status", UTF8(payload) AS Raw
+FROM events
+WHERE logsourceid = <LS_WEB>
+  AND "Hunt_URI" MATCHES
+      '(?i).*([.][.]/|[.][.]%2f|%252e%252e).*'
+LIMIT 200 LAST 60 MINUTES
