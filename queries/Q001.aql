@@ -1,0 +1,9 @@
+-- Q001 / Timeline essenziale di un IP
+-- Offline template: map Hunt_* and replace <...>.
+
+SELECT starttime, sourceip, destinationip, username,
+       QIDNAME(qid) AS Evento, UTF8(payload) AS Raw
+FROM events
+WHERE sourceip = '<IP>' OR destinationip = '<IP>'
+ORDER BY starttime ASC
+LIMIT 200 LAST 60 MINUTES
