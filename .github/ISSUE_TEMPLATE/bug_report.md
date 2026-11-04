@@ -1,12 +1,15 @@
-## Problema e comportamento risultante
+---
+name: Segnalazione errore
+about: Errore riproducibile negli strumenti offline o nella documentazione
+---
 
-## ID query o documentazione coinvolti
+## ID query / strumento
 
-## Validazione
-- Test offline e coerenza manifest
-- Esempi sintetici positivi/negativi
-- Risultati Ariel con build/DSM, se disponibili; altrimenti indicare non eseguito
+## Comportamento atteso e osservato
 
-## Scope e limiti
-Nessun dato di incidente reale o credenziale in fixture e immagini.
+## Input sintetico minimo
+Usare indirizzi di documentazione. Non includere log reali, account, credenziali o token.
 
+## Contesto della verifica
+Versione Python / OS / build QRadar e DSM se pertinenti.
+Distinguere risultati offline da risultati effettivi di Ariel.
