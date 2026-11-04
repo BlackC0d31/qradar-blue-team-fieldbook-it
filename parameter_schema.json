@@ -1,0 +1,178 @@
+{
+  "BMC_IP": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "CLUSTER_PORT": {
+    "type": "port",
+    "example": 5432
+  },
+  "DOMAIN": {
+    "type": "hostname",
+    "example": "example.org"
+  },
+  "DOMAIN_A": {
+    "type": "hostname",
+    "example": "example.org"
+  },
+  "DOMAIN_B": {
+    "type": "hostname",
+    "example": "example.net"
+  },
+  "DST": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "EMAIL": {
+    "type": "string",
+    "example": "analyst@example.org"
+  },
+  "ESA_IP": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "EXEC_MARKER": {
+    "type": "string",
+    "example": "approved-command-marker"
+  },
+  "EXPRESSWAY_IP": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "GATEWAY": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "HOST": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "INTERNAL_CIDR": {
+    "type": "cidr4",
+    "example": "192.0.2.0/24"
+  },
+  "IOC_IP": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "IP": {
+    "type": "ipv4",
+    "example": "192.0.2.10"
+  },
+  "LS_CLOUD": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_DNS": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_EDR": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_EXCH": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_FW": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_ID": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_IDP": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_LINUX": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_MAIL": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_NETSCALER": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_PROXY": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_ROUTER": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_WEB": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_WIN": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_WING": {
+    "type": "integer",
+    "example": 1001
+  },
+  "LS_ZM": {
+    "type": "integer",
+    "example": 1001
+  },
+  "MAIL_DOMAIN": {
+    "type": "hostname",
+    "example": "example.org"
+  },
+  "OFFENSE_ID": {
+    "type": "integer",
+    "example": 12345
+  },
+  "QID": {
+    "type": "integer",
+    "example": 12345
+  },
+  "RPC_DOMAIN_A": {
+    "type": "hostname",
+    "example": "example.org"
+  },
+  "RPC_DOMAIN_B": {
+    "type": "hostname",
+    "example": "example.net"
+  },
+  "SAVED_SEARCH": {
+    "type": "string",
+    "example": "Example accumulated search"
+  },
+  "STAGE_PATH": {
+    "type": "string",
+    "example": "/example-stage.sh"
+  },
+  "START": {
+    "type": "datetime",
+    "example": "2026-11-04 09:00:00"
+  },
+  "STOP": {
+    "type": "datetime",
+    "example": "2026-11-04 09:05:00"
+  },
+  "TERM": {
+    "type": "string",
+    "example": "example"
+  },
+  "USER": {
+    "type": "string",
+    "example": "analyst@example.org"
+  },
+  "USER_AGENT": {
+    "type": "string",
+    "example": "ExampleProbe/1.0"
+  },
+  "VHOST": {
+    "type": "hostname",
+    "example": "example.org"
+  }
+}
