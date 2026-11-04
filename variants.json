@@ -1,0 +1,51 @@
+[
+  {
+    "id": "OPT01",
+    "title": "IP strutturato, output minimo",
+    "sql": "SELECT starttime, sourceip, destinationip, qid\nFROM events\nWHERE logsourceid = <LS_ID>\n  AND sourceip = '<IP>'\nLIMIT 200\nSTART '<START>' STOP '<STOP>'",
+    "note": "Sostituire a raw ILIKE soltanto se la domanda è il sourceip normalizzato, non un IP in qualsiasi punto del payload.",
+    "refs": "P01, P08"
+  },
+  {
+    "id": "OPT02",
+    "title": "Classifica prima, raw dopo",
+    "sql": "SELECT qid, SUM(eventcount) AS N,\n       MIN(starttime) AS Primo, MAX(starttime) AS Ultimo\nFROM events\nWHERE logsourceid = <LS_ID> AND sourceip = '<IP>'\nGROUP BY qid\nORDER BY N DESC\nSTART '<START>' STOP '<STOP>'",
+    "note": "Primo passaggio per scegliere QID e intervallo; non fornisce prova testuale del payload.",
+    "refs": "P01, P08"
+  },
+  {
+    "id": "OPT03",
+    "title": "Raw sui candidati",
+    "sql": "SELECT starttime, sourceip, destinationip, qid,\n       UTF8(payload) AS Raw\nFROM events\nWHERE logsourceid = <LS_ID> AND sourceip = '<IP>'\n  AND qid = <QID>\nORDER BY starttime ASC\nLIMIT 200\nSTART '<START>' STOP '<STOP>'",
+    "note": "Secondo passaggio; recuperare ogni candidato necessario e controllare troncamento al limite.",
+    "refs": "P01, P08"
+  },
+  {
+    "id": "OPT04",
+    "title": "Riscrittura diretta di Q076",
+    "sql": "SELECT sourceip, UNIQUECOUNT(destinationip) AS N\nFROM events\nWHERE logsourceid = <LS_FW>\nGROUP BY sourceip\nHAVING N >= 30\nORDER BY N DESC\nLAST 15 MINUTES",
+    "note": "Candidata equivalente a Q076 sullo stesso perimetro. Non è un benchmark eseguito.",
+    "refs": "P01, P08"
+  },
+  {
+    "id": "OPT05",
+    "title": "Sorgente IP, ramo A",
+    "sql": "SELECT starttime, logsourceid, sourceip, destinationip, qid\nFROM events\nWHERE sourceip = '<IP>'\nSTART '<START>' STOP '<STOP>'",
+    "note": "Primo ramo di un OR: unire al ramo B e deduplicare la sovrapposizione prima dei conteggi.",
+    "refs": "P01, P08"
+  },
+  {
+    "id": "OPT06",
+    "title": "Destinazione IP, ramo B",
+    "sql": "SELECT starttime, logsourceid, sourceip, destinationip, qid\nFROM events\nWHERE destinationip = '<IP>'\nSTART '<START>' STOP '<STOP>'",
+    "note": "Secondo ramo. Un indice in ciascun ramo non garantisce che due ricerche siano più rapide di una.",
+    "refs": "P01, P08"
+  },
+  {
+    "id": "OPT07",
+    "title": "Testo con filtro selettivo",
+    "sql": "SELECT starttime, sourceip, qid, UTF8(payload) AS Raw\nFROM events\nWHERE TEXT SEARCH '<TERM>'\n  AND logsourceid = <LS_ID>\nLIMIT 200\nSTART '<START>' STOP '<STOP>'",
+    "note": "Tokenizzazione e copertura dell’indice testuale possono differire da ILIKE: verificare campioni, punteggiatura e periodo indicizzato.",
+    "refs": "P01, P08"
+  }
+]

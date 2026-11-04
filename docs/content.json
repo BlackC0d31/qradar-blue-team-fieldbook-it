@@ -1,0 +1,338 @@
+{
+  "tagline": "117 template AQL. Evidenze prima delle ipotesi. Dal triage all’hunting approfondito.",
+  "intro": "Un fieldbook indipendente per IBM QRadar SIEM/Ariel, dedicato ad analisti SOC, incident responder e blue/purple team. Prepara query offline, interpreta i risultati e misura le prestazioni senza nascondere variazioni di copertura.",
+  "status": "Template confrontati con documentazione e controllati offline. Non sono stati analizzati dal parser né eseguiti sulla tua installazione QRadar. Campi DSM, build, permessi e retention richiedono validazione locale.",
+  "facts": [
+    "110 query principali + 7 varianti di ottimizzazione",
+    "Strumenti Python offline senza dipendenze runtime",
+    "Tre guide PDF illustrate e documentazione Markdown modificabile",
+    "Parametri generici e indirizzi riservati alla documentazione",
+    "Licenza MIT, modelli per contributi e controlli GitHub Actions"
+  ],
+  "readme_sections": {
+    "start": "Inizia in un minuto",
+    "docs": "Documentazione",
+    "layout": "Struttura del repository",
+    "validation": "Limiti della validazione",
+    "publish": "Pubblicare il repository",
+    "license": "Licenza e attribuzioni"
+  },
+  "core_intro": [
+    [
+      "Come usare il fieldbook",
+      "Parti da Q016 per ispezionare un evento noto, poi scegli un pivot preciso per IP, utente o tempo. I livelli rapido/intermedio/avanzato descrivono la complessità analitica, non un tempo garantito."
+    ],
+    [
+      "AQL e interfaccia",
+      "Log Activity per FROM events; Network Activity per FROM flows. GLOBALVIEW richiede una vista accumulata esistente e il percorso API documentato. Qui AQL significa Ariel Query Language, non il linguaggio di altri prodotti."
+    ],
+    [
+      "Parametri e campi",
+      "Sostituisci ogni <PARAMETRO> tramite renderer o modifica manuale revisionata. I nomi Hunt_* sono convenzioni proposte: rimappali su proprietà reali o configurali tramite il gestore autorizzato."
+    ],
+    [
+      "Tempo e identità",
+      "Documenta timezone della console, finestra assoluta e conversione UTC. username può indicare attore o soggetto: verifica il raw prima di correlare identità. QID non è un Windows Event ID."
+    ],
+    [
+      "Livelli di evidenza",
+      "Richiesta, firewall allow, HTTP 200, logon riuscito, processo eseguito e file trasferito sono osservazioni diverse. Correlale tramite host, tempo e identificatori attendibili prima di formulare una catena causale."
+    ],
+    [
+      "Risultati negativi",
+      "Zero righe significa nessuna corrispondenza entro scope, permessi, parsing e retention della ricerca. Verifica un evento positivo noto prima di usare l’assenza come evidenza."
+    ],
+    [
+      "Scenari pubblici",
+      "Gli esempi sono ipotetici e parametrizzati. Non vengono forniti incidenti privati, identità istituzionali, account, segreti o IOC verificati di campagne. Le query per prodotto sono candidati di hunting, non firme exploit convalidate."
+    ],
+    [
+      "Prestazioni",
+      "Usa filtri tempo/sorgente motivati, campi normalizzati esatti e poche colonne quando mantengono la domanda. LIMIT limita l’output, non garantisce una scansione breve. Un indice aiuta dove esiste ed è applicabile."
+    ],
+    [
+      "Riutilizzo",
+      "Il renderer produce testo: non esegue AQL, non si collega a QRadar, non installa contenuti e non crea job. Revisiona la query e mappa le proprietà prima dell’esecuzione."
+    ]
+  ],
+  "getting": [
+    [
+      "Scegli il percorso",
+      "Manuale: apri queries/Q001.aql, sostituisci <IP> e copia la SELECT nell’interfaccia corretta. Preparazione automatizzata: configura il JSON e usa render_query.py. Python è facoltativo per il percorso manuale."
+    ],
+    [
+      "Estrai e verifica",
+      "Estrai l’archivio in una cartella nuova e apri il terminale nella radice del repository. Caricare lo ZIP come singolo file non pubblica un repository sorgente già estratto. Prima delle modifiche esegui verify_package.py."
+    ],
+    [
+      "Avvio Kali/Linux",
+      "Gli strumenti runtime usano solo moduli della libreria standard Python. Per rendering e verifica non servono pip, ambiente virtuale o sudo."
+    ],
+    [
+      "Avvio Windows",
+      "Estrai con Esplora file o Expand-Archive. Usa py -3 -X utf8 se il launcher è presente oppure python -X utf8. --output scrive direttamente UTF-8 ed evita le differenze di encoding della redirezione shell."
+    ],
+    [
+      "File parametri",
+      "Per Q001 usa examples/params.ip.json, per finestre assolute examples/params.window.json. Copia in work/params.json e compila solo i valori richiesti. I null non usati sono ammessi. Formato START/STOP: yyyy-MM-dd HH:mm:ss, con STOP successivo."
+    ],
+    [
+      "Controlla il risultato",
+      "Verifica che non rimangano <...>, che il tempo sia corretto e che esistano i campi Hunt_*. --output non sovrascrive un file esistente senza --force. Se serve, cambia LAST manualmente nella copia di lavoro."
+    ],
+    [
+      "Proprietà custom",
+      "Il renderer non rinomina Hunt_Action, Hunt_URI o altri campi. Rimappa nome e significato della proprietà. deny/drop/blocked sono convenzioni, non valori universali del vendor."
+    ],
+    [
+      "Esegui e conserva",
+      "Copia la SELECT in Log Activity o Network Activity. Prova un evento noto su una finestra breve. Conserva query finale, timezone, source ID, limiti di output, risultati e lacune di copertura."
+    ],
+    [
+      "Risolvi gli errori",
+      "Parametro mancante: compila la chiave. JSON o chiavi duplicate: correggi il file. ID sconosciuto: Q001, non Q1. Output esistente: cambia percorso o usa --force. Zero righe: verifica tempo, NAT, sorgente, dominio e retention."
+    ],
+    [
+      "Lavoro avanzato",
+      "--list elenca gli ID e --show visualizza i metadati. OPT01-OPT07 sono varianti da valutare, non upgrade automatici. Compila docs/benchmark-template.md con scope equivalenti e misure locali."
+    ]
+  ],
+  "performance": [
+    [
+      "Separa i costi",
+      "Selezione, valutazione filtri, parsing, aggregazione/ordinamento, trasferimento e rendering UI possono contribuire diversamente. Il diagramma è concettuale, non un execution plan fisico."
+    ],
+    [
+      "Definisci l’equivalenza",
+      "Il set completo di source ID numerici può sostituire una ricerca per nome mantenendo scope. Una finestra più corta o meno host/processor cambia la copertura: va dichiarato."
+    ],
+    [
+      "Controlla gli indici reali",
+      "Verifica Index Management secondo ruolo/build: proprietà corretta e periodo storico coperto. Abilitare un indice non crea automaticamente lo storico; valuta spazio e impatto sull’acquisizione."
+    ],
+    [
+      "Parsing e indici",
+      "L’ottimizzazione del parsing prepara valori; l’indice aiuta a localizzarli. Sono controlli differenti. Verifica copertura dell’estrazione prima di sostituire un filtro raw con una proprietà."
+    ],
+    [
+      "Testo e campi strutturati",
+      "sourceip = valore cerca un campo; una sottostringa raw può comparire ovunque. Non sono intercambiabili. TEXT SEARCH ha tokenizzazione propria e nei template va per primo, combinato con AND."
+    ],
+    [
+      "Indagine in due passaggi",
+      "OPT02 seleziona QID, conteggi e tempi; OPT03 recupera raw mirati. Copri tutti i gruppi pertinenti, anche eventi rari decisivi, e verifica eventuale troncamento a LIMIT."
+    ],
+    [
+      "Cardinalità",
+      "Raggruppare per sourceip è diverso da aggiungere URI completa e User-Agent. Togli dimensioni soltanto se la domanda rimane valida. Anche le viste accumulate hanno un costo di cardinalità."
+    ],
+    [
+      "Sottoquery e baseline",
+      "Controlla query interna e cardinalità: un LIMIT più basso può eliminare candidati. I reference data sono stato corrente salvo snapshot precedente conservato; non apprendere contatti sospetti prima di cercare novità."
+    ],
+    [
+      "Confronti A/B assoluti",
+      "Fissa START/STOP, sorgenti, domini, colonne e dati. Alterna A-B/B-A quando il costo operativo lo consente. Registra stato, conteggi, tempo motore, trasferimento/UI e note su cache e carico separatamente."
+    ],
+    [
+      "Interpreta le misure",
+      "Per tre prove comparabili completate usa la mediana. Speedup = mediana A / mediana B con la stessa unità. Nessuna accelerazione del pacchetto rappresenta una misura sulla tua console."
+    ],
+    [
+      "Periodi storici estesi",
+      "Segmenta con semantica dei confini documentata. SUM/COUNT sono ricomponibili con pesi corretti; UNIQUECOUNT non si somma se le identità si ripetono. Mantieni il contesto tra confini per le sequenze."
+    ]
+  ],
+  "publishing": [
+    [
+      "Parti da un repository vuoto",
+      "Crea su GitHub un repository con nome e visibilità scelti. Per il primo push Git non inizializzare il remoto con README, licenza o .gitignore concorrenti: il pacchetto li include già."
+    ],
+    [
+      "Estrai l’edizione corretta",
+      "Usa questa edizione come radice di un repository. README.md, script e .github devono essere alla radice. Caricare il solo ZIP conserva un archivio, senza estrarre il progetto."
+    ],
+    [
+      "Verifica prima del commit",
+      "Esegui verificatore e test. Mantieni params.json reali, output, raw log e credenziali nelle posizioni locali ignorate. Gli esempi distribuiti usano indirizzi di documentazione e parametri generici."
+    ],
+    [
+      "Inizializza e crea il commit",
+      "Esegui i comandi dalla radice estratta. Se Git richiede un’identità, usa la tua configurazione. Non sono inclusi account o credenziali."
+    ],
+    [
+      "Collega e invia",
+      "Sostituisci OWNER/REPOSITORY nell’URL con il tuo repository vuoto. Autenticati con il metodo GitHub configurato e invia main. Non usare force-push per risolvere un non-fast-forward."
+    ],
+    [
+      "Controlla il primo avvio",
+      "Dopo il push apri Actions e verifica Offline checks. I comandi sono provati localmente; l’esito di un’esecuzione ospitata non può essere affermato prima che avvenga nel tuo repository."
+    ],
+    [
+      "Crea una release",
+      "Usa tag v2.0.0 e RELEASE.md come descrizione iniziale. Sorgenti e PDF sono inclusi. Il manifest verifica coerenza, non autenticità indipendente o firma digitale."
+    ],
+    [
+      "Alternativa browser",
+      "Con questo numero di file e i workflow nascosti, Git o GitHub Desktop sono più affidabili dei caricamenti individuali. Se usi il browser, carica il contenuto estratto in lotti supportati e verifica esplicitamente .github/workflows, tests e docs."
+    ]
+  ],
+  "atlas": [
+    [
+      "D01",
+      "Q005",
+      "scope",
+      "La finestra della offense",
+      "INOFFENSE seleziona l’associazione alla offense; TIMES OFFENSE_TIME limita ai tempi applicabili. Sono due condizioni distinte. Per confronto usa anche una finestra assoluta che includa la stessa attività.",
+      "Una offense può essere aggiornata mentre lavori. Per il confronto salva stato e tempi, verifica retention e conta i risultati su entrambe le varianti."
+    ],
+    [
+      "D02",
+      "Q017",
+      "aggregate",
+      "Spray e coalescenza",
+      "UNIQUECOUNT misura l’ampiezza degli utenti; SUM(eventcount) pesa le righe coalescenti. Il filtro sulla sorgente Windows e su 4625 precede logicamente il raggruppamento. Le soglie del manuale sono illustrative.",
+      "Nel campione: tre righe, dodici errori, tre utenti. Non supera le soglie Q017 del manuale. NAT, proxy e servizi concentrano più utenti dietro una sola origine."
+    ],
+    [
+      "D03",
+      "Q038",
+      "evidence",
+      "Egress e rapporto dei byte",
+      "SUM aggrega per coppia/porta. HAVING applica volume e rapporto dopo l’aggregazione: non seleziona soltanto i singoli record grandi. Prima verifica che source sia effettivamente l’host che stai studiando.",
+      "Backup e replica possono soddisfare il criterio. Sampling, segmenti flow e orientamento richiedono verifica; il contenuto cifrato non è ricavato dai byte."
+    ],
+    [
+      "D04",
+      "Q040",
+      "timeline",
+      "Il falso beacon perfetto",
+      "Q039 propone coppie da approfondire usando frequenza e dimensione. Q040 restituisce timestamp per analisi degli intervalli. Non esiste in queste query una misura AQL della periodicità.",
+      "Scheduler legittimi e heartbeat sono spesso periodici. Non usare STDEV(sourcebytes) come se fosse deviazione standard degli intervalli temporali."
+    ],
+    [
+      "D05",
+      "Q066",
+      "aggregate",
+      "Bucket temporali senza ambiguità",
+      "starttime è epoch in millisecondi. Dividere per 300000, convertire a LONG e moltiplicare riporta ogni evento all’inizio del bucket. È una chiave numerica; la data leggibile viene dopo.",
+      "L’assenza di un bucket non è zero misurato: può essere mancanza di dati. Coalescenza e clock influenzano l’allocazione dei conteggi."
+    ],
+    [
+      "D06",
+      "Q067",
+      "timeline",
+      "Ritardo o orologio sbagliato?",
+      "La differenza storageTime - devicetime è un delta osservato. Include buffering, trasporto, processamento e disallineamento dei clock. Il divisore 1000.0 esprime il valore in secondi.",
+      "Non presentare il delta come latenza di rete. Per latenza pura servono misure coerenti delle fasi; un parsing della timezone errato può dominare il risultato."
+    ],
+    [
+      "D07",
+      "Q071",
+      "baseline",
+      "Relazione user-host",
+      "Un set seleziona gli account tecnici. Una map of sets collega ogni account ai suoi IP consentiti. La query restituisce la relazione assente nella mappa dopo i filtri sul logon.",
+      "Il valore username deve riferirsi al soggetto corretto. DHCP, NAT e account condivisi possono rendere la baseline incompleta; set e mappe sono stato corrente."
+    ],
+    [
+      "D08",
+      "Q072",
+      "subquery",
+      "La sottoquery non è una sequenza",
+      "La query interna produce l’insieme degli utenti con 4625. L’esterna cerca 4624 che appartengono a quell’insieme. La finestra esterna è più ampia: può includere un successo precedente al fallimento.",
+      "Per prima errore poi successo, stesso IP e stesso host, ricostruisci gli eventi o usa correlazione CRE stateful. IN non implementa queste condizioni."
+    ],
+    [
+      "D09",
+      "Q074",
+      "baseline",
+      "Baseline precedente alla ricerca",
+      "La query esclude le destinazioni presenti nel set baseline e conta le rimanenti. Il set deve rappresentare il periodo precedente, non includere già i contatti sospetti appena osservati.",
+      "First seen significa primo rispetto al dataset disponibile. Indirizzi CDN cambiano: una novità può essere operativa; una baseline contaminata può includere attività ostile."
+    ],
+    [
+      "D10",
+      "Q075",
+      "aggregate",
+      "Due contatori con CASE",
+      "CASE assegna eventcount al contatore pertinente e zero negli altri casi. SUM combina i pesi per sourceip. Non usa due ricerche con finestre potenzialmente diverse.",
+      "Nel campione i contatori sommano 13 su 15 eventi rappresentati: altri esiti sono esclusi. Un deny alto non significa che tutti i tentativi siano stati bloccati."
+    ],
+    [
+      "D11",
+      "Q076",
+      "subquery",
+      "FROM o HAVING?",
+      "L’interno aggrega destinazioni per sorgente e produce N. Il filtro esterno N >= 30 legge il cursore. Per questo esempio una singola query con HAVING può esprimere la stessa domanda.",
+      "Non estendere la semplificazione a sottoquery che cambiano davvero schema o aggregazione. FROM non è una JOIN tra events e flows."
+    ],
+    [
+      "D12",
+      "Q077",
+      "scope",
+      "GLOBALVIEW e dati accumulati",
+      "La vista contiene aggregati già preparati da una saved search configurata per accumulare. La ricerca legge quelle colonne e quei periodi; non ricostruisce automaticamente il raw.",
+      "La vista non equivale agli eventi originali. Se serve conferma di un comando o di un header, torna ai log pertinenti e verifica la retention."
+    ],
+    [
+      "D13",
+      "Q085",
+      "evidence",
+      "Co-occorrenza SMTP ed esecuzione",
+      "La query richiede header e almeno un marker di comando nello stesso record. È un filtro didattico generico, non un exploit divulgato per una appliance.",
+      "Se i frammenti sono separati in record diversi la relazione può sfuggire. Servono evidenze indipendenti di processi, file e rete per stabilire impatto."
+    ]
+  ],
+  "filemap": [
+    [
+      "queries/*.aql",
+      "117 template testuali separati, non un formato di importazione massiva QRadar."
+    ],
+    [
+      "queries.json / variants.json",
+      "Cataloghi canonici usati dal renderer e dalla documentazione generata."
+    ],
+    [
+      "parameter_schema.json",
+      "Tipi dei parametri ed esempi sintetici, non configurazione QRadar."
+    ],
+    [
+      "params.example.json / examples/",
+      "Modello vuoto e piccoli input dimostrativi con indirizzi di documentazione."
+    ],
+    [
+      "fieldbook.py / render_query.py",
+      "Validazione e preparazione locali; nessuna connessione o esecuzione AQL."
+    ],
+    [
+      "verify_package.py / MANIFEST.sha256.json",
+      "Coerenza cataloghi/file e integrità della release."
+    ],
+    [
+      "docs/*.md / docs/pdf/",
+      "Manuale, atlante, guide uso/prestazioni modificabili e tre PDF pronti."
+    ],
+    [
+      "docs/assets/",
+      "Identità grafica vettoriale e diagrammi concettuali originali."
+    ],
+    [
+      "tests/ / .github/workflows/",
+      "Test offline e workflow CI fornito."
+    ],
+    [
+      "tools/build_docs.py / tools/release.py",
+      "Ricostruzione AQL/Markdown/PDF e aggiornamento esplicito del manifest."
+    ],
+    [
+      "requirements-docs.txt",
+      "Dipendenza opzionale bloccata per i PDF; non serve agli strumenti runtime."
+    ],
+    [
+      "LICENSE / NOTICE / CONTRIBUTING.md",
+      "Licenza MIT, attribuzioni, limiti di validazione e politica dei contributi."
+    ]
+  ],
+  "properties_intro": "Tutti i nomi Hunt_* sono convenzioni locali. Verifica tipo e significato sul raw: attore/soggetto, client/proxy e valori action vendor. Il progetto non installa proprietà.",
+  "benchmark_title": "Benchmark locale A/B"
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="999" height="176" viewBox="0 0 999 176" role="img" aria-label="subquery">
+<rect width="999" height="176" rx="16" fill="#edf5f6"/>
+<rect x="25" y="38" width="210" height="68" rx="8" fill="#fff" stroke="#007f83" stroke-width="2"/>
+<text x="130.0" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#102c42">Utenti con errori</text>
+<path d="M240 72h21m-5-5 5 5-5 5" fill="none" stroke="#007f83" stroke-width="2"/>
+<rect x="268" y="38" width="210" height="68" rx="8" fill="#fff" stroke="#007f83" stroke-width="2"/>
+<text x="373.0" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#102c42">Set di appartenenza</text>
+<path d="M483 72h21m-5-5 5 5-5 5" fill="none" stroke="#007f83" stroke-width="2"/>
+<rect x="511" y="38" width="210" height="68" rx="8" fill="#fff" stroke="#007f83" stroke-width="2"/>
+<text x="616.0" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#102c42">Eventi di successo</text>
+<path d="M726 72h21m-5-5 5 5-5 5" fill="none" stroke="#007f83" stroke-width="2"/>
+<rect x="754" y="38" width="210" height="68" rx="8" fill="#fff" stroke="#007f83" stroke-width="2"/>
+<text x="859.0" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#102c42">Ordine non imposto</text>
+<text x="25" y="145" font-family="Arial,sans-serif" font-size="12" fill="#52606a">Modello concettuale - non è un execution plan fisico</text></svg>

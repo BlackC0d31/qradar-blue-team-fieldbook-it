@@ -1,0 +1,6 @@
+[project]
+name = "qradar-blue-team-fieldbook-it"
+version = "2.0.0"
+description = "Offline QRadar AQL fieldbook and query preparation tools"
+requires-python = ">=3.10"
+license = "MIT"
